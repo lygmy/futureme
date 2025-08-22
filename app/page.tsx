@@ -1,103 +1,143 @@
+'use client';
+
+import { useState } from 'react';
 import Image from "next/image";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [timeValue, setTimeValue] = useState('6');
+  const [timeUnit, setTimeUnit] = useState('months');
+  const [countryCode, setCountryCode] = useState('+1');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [letterContent, setLetterContent] = useState('');
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  const calculateDeliveryDate = () => {
+    const now = new Date();
+    const value = parseInt(timeValue);
+    
+    if (timeUnit === 'months') {
+      now.setMonth(now.getMonth() + value);
+    } else if (timeUnit === 'years') {
+      now.setFullYear(now.getFullYear() + value);
+    } else if (timeUnit === 'days') {
+      now.setDate(now.getDate() + value);
+    }
+    
+    return now.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+  };
+
+  const getCurrentDate = () => {
+    const now = new Date();
+    return now.toLocaleDateString('en-US', { 
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-[#E8E7E5] flex items-center justify-center p-4">
+      <div className="w-full max-w-[540px] flex flex-col items-center gap-11">
+        {/* Delivery Settings */}
+        <div className="flex items-center justify-center gap-1 text-base font-marist text-[#4E4E4E] whitespace-nowrap">
+          <span>Deliver in</span>
+          
+          <div className="px-3 py-2 bg-[#EDECEA] rounded-lg outline outline-1 outline-offset-[-1px] outline-[#D1D0CD] flex items-center">
+            <input
+              type="number"
+              value={timeValue}
+              onChange={(e) => setTimeValue(e.target.value)}
+              className="w-8 bg-transparent text-center text-[#4E4E4E] text-base font-marist outline-none"
+              min="1"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </div>
+          
+          <div className="relative">
+            <select
+              value={timeUnit}
+              onChange={(e) => setTimeUnit(e.target.value)}
+              className="p-2 bg-[#EDECEA] rounded-lg outline outline-1 outline-offset-[-1px] outline-[#D1D0CD] text-[#4E4E4E] text-base font-marist appearance-none pr-8 cursor-pointer"
+              aria-label="Time unit"
+            >
+              <option value="days">days</option>
+              <option value="months">months</option>
+              <option value="years">years</option>
+            </select>
+            <Image
+              src="/icons/downward-carat.svg"
+              alt=""
+              width={12}
+              height={12}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none"
+            />
+          </div>
+          
+          <span>({calculateDeliveryDate()})</span>
+          <span>to</span>
+          
+          <div className="relative">
+            <select
+              value={countryCode}
+              onChange={(e) => setCountryCode(e.target.value)}
+              className="p-2 bg-[#EDECEA] rounded-lg outline outline-1 outline-offset-[-1px] outline-[#D1D0CD] text-[#4E4E4E] text-base font-marist appearance-none pr-8 cursor-pointer"
+              aria-label="Country code"
+            >
+              <option value="+1">+1</option>
+              <option value="+44">+44</option>
+              <option value="+33">+33</option>
+              <option value="+49">+49</option>
+            </select>
+            <Image
+              src="/icons/downward-carat.svg"
+              alt=""
+              width={12}
+              height={12}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none"
+            />
+          </div>
+          
+          <div className="p-2 bg-[#EDECEA] rounded-lg outline outline-1 outline-offset-[-1px] outline-[#D1D0CD] flex items-center min-w-[116px]">
+            <input
+              type="tel"
+              placeholder="(123) 456-7890"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              className="bg-transparent text-[#4E4E4E] placeholder:text-[#999999] text-base font-marist outline-none w-full"
+            />
+          </div>
+          
+          <span>.</span>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+
+        {/* Letter */}
+        <div className="w-full px-12 py-9 bg-white shadow-[0px_2px_4px_0px_rgba(0,0,0,0.05),_0px_7px_7px_0px_rgba(0,0,0,0.04),_0px_16px_10px_0px_rgba(0,0,0,0.03),_0px_29px_11px_0px_rgba(0,0,0,0.01),_0px_45px_12px_0px_rgba(0,0,0,0.00)] outline outline-[0.5px] outline-offset-[-0.5px] outline-[#F2F2F2] rounded-[4px] flex flex-col gap-5">
+          <div className="text-[#999999] text-base font-normal font-marist">
+            {getCurrentDate()}
+          </div>
+          
+          <div className="h-[0.5px] bg-[#DCDCDC]"></div>
+          
+          <textarea
+            placeholder="Dear future me,"
+            value={letterContent}
+            onChange={(e) => setLetterContent(e.target.value)}
+            className="w-full h-[576px] bg-transparent text-[#4E4E4E] placeholder:text-[#999999] text-base font-marist resize-none outline-none leading-relaxed pr-4"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        </div>
+
+        {/* Send Button */}
+        <div className="relative w-96 h-11">
+          <div className="w-full h-full bg-gradient-to-b from-stone-300 to-stone-400 rounded-[36px] shadow-[inset_0px_1px_2px_1px_rgba(255,255,255,0.40)] outline outline-[0.5px] outline-offset-[-0.5px] outline-[#908E8B]"></div>
+          <button className="absolute inset-0 flex items-center justify-center text-[#4E4E4E] text-base font-medium font-marist">
+            Send to the Future
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
