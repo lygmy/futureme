@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from "next/image";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
   const [countryCode, setCountryCode] = useState('+1');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [letterContent, setLetterContent] = useState('');
+  const router = useRouter();
 
   const calculateDeliveryDate = () => {
     const now = new Date();
@@ -39,6 +41,19 @@ export default function Home() {
       hour12: true
     });
   };
+
+  const handleSendToFuture = () => {
+    const params = new URLSearchParams({
+      timeValue,
+      timeUnit,
+      countryCode,
+      phoneNumber,
+      letterContent
+    });
+    
+    router.push(`/confirmation?${params.toString()}`);
+  };
+
 
   return (
     <div className="min-h-screen bg-[#E8E7E5] flex items-center justify-center p-4">
@@ -133,7 +148,10 @@ export default function Home() {
         {/* Send Button */}
         <div className="relative w-96 h-11">
           <div className="w-full h-full bg-gradient-to-b from-stone-300 to-stone-400 rounded-[36px] shadow-[inset_0px_1px_2px_1px_rgba(255,255,255,0.40)] outline outline-[0.5px] outline-offset-[-0.5px] outline-[#908E8B]"></div>
-          <button className="absolute inset-0 flex items-center justify-center text-[#4E4E4E] text-base font-medium font-marist">
+          <button 
+            onClick={handleSendToFuture}
+            className="absolute inset-0 flex items-center justify-center text-[#4E4E4E] text-base font-medium font-marist"
+          >
             Send to the Future
           </button>
         </div>
