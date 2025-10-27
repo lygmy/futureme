@@ -57,7 +57,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#E8E7E5] flex items-center justify-center p-4">
-      <div className="w-full max-w-[540px] flex flex-col items-center gap-8 sm:gap-11">
+      <div className="w-full max-w-[540px] flex flex-col items-center gap-8 sm:gap-8">
         {/* Delivery Settings */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-center gap-2 sm:gap-1 text-base font-marist text-[#4E4E4E] text-center">
           {/* First line on mobile: time selection */}
@@ -142,7 +142,7 @@ export default function Home() {
         </div>
 
         {/* Letter */}
-        <div className="w-full px-6 sm:px-12 py-6 sm:py-9 bg-white shadow-[0px_2px_4px_0px_rgba(0,0,0,0.05),_0px_7px_7px_0px_rgba(0,0,0,0.04),_0px_16px_10px_0px_rgba(0,0,0,0.03),_0px_29px_11px_0px_rgba(0,0,0,0.01),_0px_45px_12px_0px_rgba(0,0,0,0.00)] outline outline-[0.5px] outline-offset-[-0.5px] outline-[#F2F2F2] rounded-[4px] flex flex-col gap-4 sm:gap-5">
+        <div className="w-full px-6 sm:px-12 py-6 sm:py-9 bg-white shadow-[0px_2px_4px_0px_rgba(0,0,0,0.05),_0px_7px_7px_0px_rgba(0,0,0,0.04),_0px_16px_10px_0px_rgba(0,0,0,0.03),_0px_29px_11px_0px_rgba(0,0,0,0.01),_0px_45px_12px_0px_rgba(0,0,0,0.00)] outline outline-[0.5px] outline-offset-[-0.5px] outline-[#F2F2F2] rounded-[8px] flex flex-col gap-4 sm:gap-5">
           <div className="text-[#999999] text-base font-normal font-marist">
             {getCurrentDate()}
           </div>
