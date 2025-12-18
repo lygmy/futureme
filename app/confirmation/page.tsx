@@ -15,10 +15,20 @@ export default function ConfirmationPage() {
   const countryCode = searchParams.get('countryCode') || '+1';
   const phoneNumber = searchParams.get('phoneNumber') || '';
 
+  const getOrdinalSuffix = (day: number) => {
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
+      default: return 'th';
+    }
+  };
+
   const calculateDeliveryDate = () => {
     const now = new Date();
     const value = parseInt(timeValue);
-    
+
     if (timeUnit === 'months') {
       now.setMonth(now.getMonth() + value);
     } else if (timeUnit === 'years') {
@@ -26,12 +36,12 @@ export default function ConfirmationPage() {
     } else if (timeUnit === 'days') {
       now.setDate(now.getDate() + value);
     }
-    
-    return now.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    });
+
+    const month = now.toLocaleDateString('en-US', { month: 'long' });
+    const day = now.getDate();
+    const year = now.getFullYear();
+
+    return `${month} ${day}${getOrdinalSuffix(day)} ${year}`;
   };
 
   const handleAnimationEnd = () => {
@@ -50,11 +60,21 @@ export default function ConfirmationPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#E8E7E5] flex flex-col items-center justify-center p-4 relative">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 relative">
+      {/* Paper texture background */}
+      <div
+        className="fixed inset-0 z-0"
+        style={{
+          backgroundImage: "url('/images/paper%20texture%20seamless.png')",
+          backgroundRepeat: 'repeat',
+          backgroundSize: '434px 434px'
+        }}
+      />
+
       {/* Animation */}
       {showAnimation && (
-        <div 
-          className={`absolute inset-0 flex items-center justify-center w-full h-full transition-opacity duration-500 ease-in-out ${
+        <div
+          className={`absolute inset-0 flex items-center justify-center w-full h-full z-10 transition-opacity duration-500 ease-in-out ${
             animationFading ? 'opacity-0' : 'opacity-100'
           }`}
         >
@@ -62,7 +82,7 @@ export default function ConfirmationPage() {
             autoPlay
             muted
             onEnded={handleAnimationEnd}
-            className="max-w-full max-h-[90vh] w-auto h-auto object-contain"
+            className="max-w-[90vw] max-h-[90vh] w-auto h-auto object-contain"
           >
             <source src="/images/letter-animation.mov" type="video/mp4" />
             <source src="/images/letter-animation.mov" type="video/quicktime" />
@@ -73,18 +93,18 @@ export default function ConfirmationPage() {
 
       {/* Confirmation Message */}
       {showConfirmation && (
-        <div className="text-center space-y-6 opacity-0 animate-[fadeIn_500ms_ease-in-out_forwards]">
+        <div className="text-center space-y-8 opacity-0 animate-[fadeIn_500ms_ease-in-out_forwards] relative z-10">
           <div className="space-y-2">
-            <h1 className="text-2xl font-marist text-[#4E4E4E] font-medium">
+            <h1 className="text-[24px] font-['ABC_Monument_Grotesk'] text-[#4E4E4E]">
               Letter Sent to the Future!
             </h1>
-            <p className="text-base font-marist text-[#999999]">
+            <p className="text-[18px] font-marist text-[#999999]">
               Your letter will be delivered on {calculateDeliveryDate()} to {countryCode} {phoneNumber}
             </p>
           </div>
           <button
             onClick={handleBackToForm}
-            className="px-8 py-3 bg-gradient-to-b from-stone-300 to-stone-400 rounded-[36px] shadow-[inset_0px_1px_2px_1px_rgba(255,255,255,0.40)] outline outline-[0.5px] outline-offset-[-0.5px] outline-[#908E8B] text-[#4E4E4E] text-base font-medium font-marist cursor-pointer"
+            className="px-8 h-[49px] bg-gradient-to-b from-[#5B5B5B] to-[#2D2D2D] border border-[#6E6E6E] rounded-[47px] text-white text-[18px] font-['ABC_Monument_Grotesk'] shadow-lg backdrop-blur-sm cursor-pointer"
           >
             Send Another Letter
           </button>

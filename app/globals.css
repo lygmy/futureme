@@ -30,6 +30,26 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'ABC Monument Grotesk';
+  src: url('/fonts/ABC Monument-Grotesk/ABCMonumentGrotesk-Regular-Trial.woff2') format('woff2'),
+       url('/fonts/ABC Monument-Grotesk/ABCMonumentGrotesk-Regular-Trial.woff') format('woff'),
+       url('/fonts/ABC Monument-Grotesk/ABCMonumentGrotesk-Regular-Trial.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ABC Monument Grotesk';
+  src: url('/fonts/ABC Monument-Grotesk/ABCMonumentGrotesk-Medium-Trial.woff2') format('woff2'),
+       url('/fonts/ABC Monument-Grotesk/ABCMonumentGrotesk-Medium-Trial.woff') format('woff'),
+       url('/fonts/ABC Monument-Grotesk/ABCMonumentGrotesk-Medium-Trial.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   background: #E8E7E5;
   color: #4E4E4E;
