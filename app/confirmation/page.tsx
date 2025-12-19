@@ -79,6 +79,7 @@ export default function ConfirmationPage() {
           }`}
         >
           <video
+            playsInline //prevents native player from opening on iOS
             autoPlay
             muted
             onEnded={handleAnimationEnd}

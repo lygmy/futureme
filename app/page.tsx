@@ -44,6 +44,13 @@ export default function Home() {
     const now = new Date();
     const value = parseInt(timeValue);
 
+    //When user clears input, return current date
+    if (timeValue === '') {
+    console.log('Function execution stopped: Input is empty');
+    const defaultMonthName = now.toLocaleDateString('en-US', { month: 'long' });
+    return `${defaultMonthName} ${now.getDate()}${getOrdinalSuffix(now.getDate())} ${now.getFullYear()}`;
+  }
+
     if (timeUnit === 'months') {
       now.setMonth(now.getMonth() + value);
     } else if (timeUnit === 'years') {
@@ -254,7 +261,7 @@ export default function Home() {
                 <div className="flex gap-2 items-center">
                   <div className="bg-[#F5F4F2] px-4 py-2 rounded-lg flex items-center justify-center shrink-0">
                     <input
-                      type="number"
+                      type="text"
                       value={countryCode}
                       onChange={(e) => setCountryCode(e.target.value)}
                       className="bg-transparent text-[#4E4E4E] text-[28px] outline-none font-['ABC_Monument_Grotesk'] w-full"
